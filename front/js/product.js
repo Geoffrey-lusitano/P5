@@ -71,21 +71,21 @@ console.log(productId);
             // Ajout de la description
             let description = document.createTextNode(product.description);
             document.querySelector("#description").appendChild(description);
-        
+
+            // liste de choix de couleurs
+        let selectColors = document.getElementById("colors")
+        console.log(selectColors)
+        product.colors.forEach((color) => {
+            let option = document.createElement("option");
+            option.innerHTML = `${color}`;
+            option.value = `${color}`;
+            selectColors.appendChild(option);
 
         });
+    });
 
     
-    //     // liste de choix de couleurs
-    //     let selectColors = document.getElementById("colors")
-    //     console.log(selectColors)
-    //     product.colors.forEach((color) => {
-    //         let option = document.createElement("option");
-    //         option.innerHTML = `${color}`;
-    //         option.value = `${color}`;
-    //         selectColors.appendChild(option);
-
-    //     })
+        
     //     addProduct(product);
     // };
 
