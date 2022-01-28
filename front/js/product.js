@@ -73,27 +73,37 @@ console.log(productId);
             document.querySelector("#description").appendChild(description);
 
             // liste de choix de couleurs
-        let selectColors = document.getElementById("colors")
-        console.log(selectColors)
-        product.colors.forEach((color) => {
-            let option = document.createElement("option");
-            option.innerHTML = `${color}`;
-            option.value = `${color}`;
-            selectColors.appendChild(option);
+            let selectColors = document.getElementById("colors")
+            console.log(selectColors);
+            product.colors.forEach((color) => {
+                let option = document.createElement("option");
+                option.innerHTML = `${color}`;
+                option.value = `${color}`;
+                selectColors.appendChild(option);
+                console.log(option.value);
 
-        });
+            });
+            //Etape 7 : ajouter le produit dans le panier
+            let addToCart = document.getElementById("addToCart");
+            console.log(addToCart);
+            addToCart.addEventListener("click", () => {
+
+                localStorage.id = productId;
+                localStorage.setItem("quantity", document.querySelector("#quantity").value);
+                localStorage.setItem("color", document.querySelector("#colors").value);
+                console.log(document.querySelector("#colors").value);
+                
+            })
     });
 
     
-        
-    //     addProduct(product);
-    // };
 
-    // // ajouter le produit dans le panier
-    // const addProduct = () => {
-    //     let button = document.getElementById(product._id);
-    //     console.log(button);
-    // };
+    
+        
+    
+
+
+
 
 
 
