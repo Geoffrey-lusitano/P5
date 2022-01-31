@@ -87,13 +87,24 @@ console.log(productId);
             let addToCart = document.getElementById("addToCart");
             console.log(addToCart);
             addToCart.addEventListener("click", () => {
-
+                cartProductArray = JSON.parse(localStorage.getItem("cartProduct"));
                 localStorage.id = productId;
                 localStorage.setItem("quantity", document.querySelector("#quantity").value);
                 localStorage.setItem("color", document.querySelector("#colors").value);
                 console.log(document.querySelector("#colors").value);
+                console.log(cartProductArray);
+
+                if (cartProductArray == null) {
+                    cartProductArray = [];
+                    cartProductArray.push(productId);
+                    cartProductArray.push( document.querySelector("#quantity").value);
+                    cartProductArray.push(document.querySelector("#colors").value);
+                    console.log(cartProductArray);
+                    localStorage.setItem("cartProduct", JSON.stringify(cartProductArray));
+                }
+
                 
-            })
+            });
     });
 
     
