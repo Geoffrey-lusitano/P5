@@ -1,5 +1,5 @@
 // Récupérer l'array produit depuis le localstorage
-let cart = localStorage.getItem("cartProduct");
+let cart = JSON.parse(localStorage.getItem("cartProduct"));
 console.log(cart);
 
 // let id = localStorage.getItem("id");
