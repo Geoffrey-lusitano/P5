@@ -17,46 +17,47 @@ console.log(productId);
             product = result
             console.log(product);
             // Option 1 
-        //     document.querySelector(".item").innerHTML =  ` 
-        // <section class="item">
-        //   <article>
-        //     <div class="item__img">
-        //       <img src="${product.imageUrl}" alt="${product.altTxt}">
-        //     </div>
-        //     <div class="item__content">
+            //     document.querySelector(".item").innerHTML =  ` 
+            // <section class="item">
+            //   <article>
+            //     <div class="item__img">
+            //       <img src="${product.imageUrl}" alt="${product.altTxt}">
+            //     </div>
+            //     <div class="item__content">
 
-        //       <div class="item__content__titlePrice">
-        //         <h1 id="title">${product.name}</h1>
-        //         <p>Prix : <span id="price">${product.price}</span>€</p>
-        //       </div>
+            //       <div class="item__content__titlePrice">
+            //         <h1 id="title">${product.name}</h1>
+            //         <p>Prix : <span id="price">${product.price}</span>€</p>
+            //       </div>
 
-        //       <div class="item__content__description">
-        //         <p class="item__content__description__title">Description :</p>
-        //         <p id="description">${product.description}</p>
-        //       </div>
+            //       <div class="item__content__description">
+            //         <p class="item__content__description__title">Description :</p>
+            //         <p id="description">${product.description}</p>
+            //       </div>
 
-        //       <div class="item__content__settings">
-        //         <div class="item__content__settings__color">
-        //           <label for="color-select">Choisir une couleur :</label>
-        //           <select name="color-select" id="colors">
-        //                 <option value="">--SVP, choisissez une couleur --</option>
-        //           </select>
-        //         </div>
+            //       <div class="item__content__settings">
+            //         <div class="item__content__settings__color">
+            //           <label for="color-select">Choisir une couleur :</label>
+            //           <select name="color-select" id="colors">
+            //                 <option value="">--SVP, choisissez une couleur --</option>
+            //           </select>
+            //         </div>
 
-        //         <div class="item__content__settings__quantity">
-        //           <label for="itemQuantity">Nombre d'article(s) (1-100) :</label>
-        //           <input type="number" name="itemQuantity" min="1" max="100" value="0" id="quantity">
-        //         </div>
-        //       </div>
+            //         <div class="item__content__settings__quantity">
+            //           <label for="itemQuantity">Nombre d'article(s) (1-100) :</label>
+            //           <input type="number" name="itemQuantity" min="1" max="100" value="0" id="quantity">
+            //         </div>
+            //       </div>
 
-        //       <div class="item__content__addButton">
-        //         <button id="${product.id}">Ajouter au panier</button>
-        //       </div>
+            //       <div class="item__content__addButton">
+            //         <button id="${product.id}">Ajouter au panier</button>
+            //       </div>
 
-        //     </div>
-        //   </article>
-        // </section>
-        // `;
+            //     </div>
+            //   </article>
+            // </section>
+            // `;
+
             // Option 2 
             // Ajout de l'image
             let img = document.createElement("img");
@@ -87,23 +88,42 @@ console.log(productId);
             let addToCart = document.getElementById("addToCart");
             console.log(addToCart);
             addToCart.addEventListener("click", () => {
-                cartProductArray = JSON.parse(localStorage.getItem("cartProduct"));
-                localStorage.id = productId;
-                localStorage.setItem("quantity", document.querySelector("#quantity").value);
-                localStorage.setItem("color", document.querySelector("#colors").value);
-                console.log(document.querySelector("#colors").value);
-                console.log(cartProductArray);
+                cartProductsArray = JSON.parse(localStorage.getItem("cartProducts"));
+                // localStorage.id = productId;
+                // localStorage.setItem("quantity", document.querySelector("#quantity").value);
+                // localStorage.setItem("color", document.querySelector("#colors").value);
+                // console.log(document.querySelector("#colors").value);
+                // console.log(cartProductArray);
 
-                if (cartProductArray == null) {
-                    cartProductArray = [];
-                    cartProductArray.push(productId);
-                    cartProductArray.push( document.querySelector("#quantity").value);
-                    cartProductArray.push(document.querySelector("#colors").value);
-                    console.log(cartProductArray);
-                    localStorage.setItem("cartProduct", JSON.stringify(cartProductArray));
+                if (cartProductsArray == null) {
+                    cartProductsArray = [];    
                 }
+                const cartProduct = {
+                    productId:productId, 
+                    quantity:document.querySelector("#quantity").value,
+                    color:document.querySelector("#colors").value
+                }
+                cartProductsArray.push(cartProduct);
+                // cartProductArray.push( document.querySelector("#quantity").value);
+                // cartProductArray.push(document.querySelector("#colors").value);
+                // console.log(cartProductArray);
+
+                localStorage.setItem("cartProducts", JSON.stringify(cartProductsArray));
 
                 
+                //Lorsqu’on ajoute un produit au panier, si celui-ci était déjà présent dans le panier (même id + même couleur), on incrémentesimplement la quantité du produit correspondant dans l’array.
+                let addQuantity = cartProductsArray.find(p => p.id == cartProduct.productId) && cartProductsArray.find(p => p.color == cartProduct.color)
+                if (addQuantity != undefined) {
+                    addQuantity.quantity += cartProduct.quantity
+                } else {
+                    cartProductsArray.push(cartProduct)
+                }
+                //console.log(cartProduct.productId);
+                // cartProductsArray.forEach(item => {
+                //     if (cartProduct.productId == productId && cartProduct.color == color ) {
+                //         item.quantity += quantity;
+                //     }
+                // })
             });
     });
 
