@@ -3,6 +3,8 @@
 let cart = JSON.parse(localStorage.getItem("cartProducts"));
 console.log(cart);
 
+console.log(cart.color);
+
 // On connecte l api
 
 // Si le panier est vide

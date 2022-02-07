@@ -3,6 +3,7 @@
 let params = new URLSearchParams(document.location.search);
 // Etape 5 : Récupérer l’id du produit à afficher
 let productId = params.get("id");
+ 
     // if (productId == null) {
     //     return;
     // }
@@ -77,6 +78,7 @@ console.log(productId);
             let selectColors = document.getElementById("colors")
             console.log(selectColors);
             product.colors.forEach((color) => {
+                console.log(color);
                 let option = document.createElement("option");
                 option.innerHTML = `${color}`;
                 option.value = `${color}`;
@@ -103,7 +105,35 @@ console.log(productId);
                     quantity:document.querySelector("#quantity").value,
                     color:document.querySelector("#colors").value
                 }
-                cartProductsArray.push(cartProduct);
+                //Lorsqu’on ajoute un produit au panier, si celui-ci était déjà présent dans le panier (même id + même couleur), on incrémentesimplement la quantité du produit correspondant dans l’array. 
+                if (cartProductsArray.length == 0) {
+                    cartProductsArray.push(cartProduct);
+                 } else {
+                    cartProductsArray.forEach(cartProduct => {
+                        console.log("toto");
+                        if(cartProduct && cartProduct.productId === productId) {
+                            console.log(productId);
+                            console.log(quantity);
+                            console.log(colors);
+                            if (cartProduct && cartProduct.color === color) {
+                                console.log(color);
+                                cartProduct.quantity += quantity;
+                            } else {
+                                cartProductsArray.push(cartProduct);
+                            }
+                        } else {
+                            console.log(cartProduct);
+                            cartProductsArray.push(cartProduct);
+                        }
+                    });
+                }
+                 console.log(cartProductsArray);
+
+                //  for (var i = 0; i < localStorage.length; i++) {
+                //     console.log(localStorage.getItem(localStorage.key(i)));
+                //  }
+
+                //cartProductsArray.push(cartProduct);
                 // cartProductArray.push( document.querySelector("#quantity").value);
                 // cartProductArray.push(document.querySelector("#colors").value);
                 // console.log(cartProductArray);
@@ -111,13 +141,13 @@ console.log(productId);
                 localStorage.setItem("cartProducts", JSON.stringify(cartProductsArray));
 
                 
-                //Lorsqu’on ajoute un produit au panier, si celui-ci était déjà présent dans le panier (même id + même couleur), on incrémentesimplement la quantité du produit correspondant dans l’array.
-                let addQuantity = cartProductsArray.find(p => p.id == cartProduct.productId) && cartProductsArray.find(p => p.color == cartProduct.color)
-                if (addQuantity != undefined) {
-                    addQuantity.quantity += cartProduct.quantity
-                } else {
-                    cartProductsArray.push(cartProduct)
-                }
+                
+                // let addQuantity = cartProductsArray.find(p => p.id == cartProduct.productId) && cartProductsArray.find(p => p.color == cartProduct.color)
+                // if (addQuantity != undefined) {
+                //     addQuantity.quantity += cartProduct.quantity
+                // } else {
+                //     cartProductsArray.push(cartProduct)
+                // }
                 //console.log(cartProduct.productId);
                 // cartProductsArray.forEach(item => {
                 //     if (cartProduct.productId == productId && cartProduct.color == color ) {
