@@ -100,32 +100,29 @@ console.log(productId);
                 if (cartProductsArray == null) {
                     cartProductsArray = [];    
                 }
-                const cartProduct = {
+                const newCartProduct = {
                     productId:productId, 
-                    quantity:document.querySelector("#quantity").value,
+                    quantity: parseInt(document.querySelector("#quantity").value),
                     color:document.querySelector("#colors").value
                 }
                 //Lorsqu’on ajoute un produit au panier, si celui-ci était déjà présent dans le panier (même id + même couleur), on incrémentesimplement la quantité du produit correspondant dans l’array. 
+                
                 if (cartProductsArray.length == 0) {
-                    cartProductsArray.push(cartProduct);
+                    cartProductsArray.push(newCartProduct);
+                    console.log("etape 1")
                  } else {
-                    cartProductsArray.forEach(cartProduct => {
-                        console.log("toto");
-                        if(cartProduct && cartProduct.productId === productId) {
-                            console.log(productId);
-                            console.log(quantity);
-                            console.log(colors);
-                            if (cartProduct && cartProduct.color === color) {
-                                console.log(color);
-                                cartProduct.quantity += quantity;
-                            } else {
-                                cartProductsArray.push(cartProduct);
-                            }
-                        } else {
-                            console.log(cartProduct);
-                            cartProductsArray.push(cartProduct);
+                    //cartProductsArray.forEach(cartProduct => {
+                        let cartProduct = cartProductsArray.find(newCartProduct => newCartProduct.productId === cartProduct.productId);
+                        console.log("etape 2");
+                        if(cartProduct.productId === newCartProduct.productId && cartProduct.color === newCartProduct.color) {
+                            console.log("etape 3");
+                            cartProduct.quantity += newCartProduct.quantity;
+                            console.log("etape 4")
+                        } else if (cartProduct.color !== newCartProduct.color) {
+                            cartProductsArray.push(newCartProduct);
+                            console.log("etape 5")
                         }
-                    });
+                    //});
                 }
                  console.log(cartProductsArray);
 
