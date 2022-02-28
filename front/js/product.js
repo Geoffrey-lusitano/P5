@@ -111,18 +111,14 @@ console.log(productId);
                     cartProductsArray.push(newCartProduct);
                     console.log("etape 1")
                  } else {
-                    //cartProductsArray.forEach(cartProduct => {
-                        let cartProduct = cartProductsArray.find(newCartProduct => newCartProduct.productId === cartProduct.productId);
+                        let cartProductInArray = cartProductsArray.find(cartProductArray => newCartProduct.productId === cartProductArray.productId && cartProductArray.color === newCartProduct.color);
                         console.log("etape 2");
-                        if(cartProduct.productId === newCartProduct.productId && cartProduct.color === newCartProduct.color) {
-                            console.log("etape 3");
-                            cartProduct.quantity += newCartProduct.quantity;
-                            console.log("etape 4")
-                        } else if (cartProduct.color !== newCartProduct.color) {
+                        console.log(cartProductInArray);
+                        if (!cartProductInArray) {
                             cartProductsArray.push(newCartProduct);
-                            console.log("etape 5")
+                        } else {
+                            cartProductInArray.quantity += newCartProduct.quantity;
                         }
-                    //});
                 }
                  console.log(cartProductsArray);
 
